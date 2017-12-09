@@ -76,7 +76,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-noinst_PROGRAMS = test_echo$(EXEEXT) test_cond$(EXEEXT)
+noinst_PROGRAMS = test_echo$(EXEEXT) test_cond$(EXEEXT) \
+	test_proxy$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/depcomp
@@ -94,6 +95,9 @@ test_cond_LDADD = $(LDADD)
 am_test_echo_OBJECTS = test_echo.$(OBJEXT)
 test_echo_OBJECTS = $(am_test_echo_OBJECTS)
 test_echo_LDADD = $(LDADD)
+am_test_proxy_OBJECTS = test_proxy.$(OBJEXT)
+test_proxy_OBJECTS = $(am_test_proxy_OBJECTS)
+test_proxy_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -122,8 +126,10 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(test_cond_SOURCES) $(test_echo_SOURCES)
-DIST_SOURCES = $(test_cond_SOURCES) $(test_echo_SOURCES)
+SOURCES = $(test_cond_SOURCES) $(test_echo_SOURCES) \
+	$(test_proxy_SOURCES)
+DIST_SOURCES = $(test_cond_SOURCES) $(test_echo_SOURCES) \
+	$(test_proxy_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -241,6 +247,7 @@ AUTOMAKE_OPTIONS = foreign
 INCLUDES = -I../include
 test_echo_SOURCES = test_echo.c
 test_cond_SOURCES = test_cond.c
+test_proxy_SOURCES = test_proxy.c
 all: all-am
 
 .SUFFIXES:
@@ -287,6 +294,10 @@ test_echo$(EXEEXT): $(test_echo_OBJECTS) $(test_echo_DEPENDENCIES) $(EXTRA_test_
 	@rm -f test_echo$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_echo_OBJECTS) $(test_echo_LDADD) $(LIBS)
 
+test_proxy$(EXEEXT): $(test_proxy_OBJECTS) $(test_proxy_DEPENDENCIES) $(EXTRA_test_proxy_DEPENDENCIES) 
+	@rm -f test_proxy$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(test_proxy_OBJECTS) $(test_proxy_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
@@ -295,6 +306,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_cond.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_echo.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_proxy.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

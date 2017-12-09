@@ -4,11 +4,15 @@
 	> Mail: 
 	> Created Time: Tue 05 Dec 2017 04:50:17 AM PST
  ************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <event2/event.h>
+#include <arpa/inet.h>
 
-#include "common.h"
 #include "evco.h"
-#include "libsdk/api_net.h"
-#include "libsdk/api_tcp.h"
 
 typedef struct proxy_args {
 	int srcfd;
@@ -22,7 +26,7 @@ void proxy(proxy_args_t *pargs)
 	char *buffer = (char *)malloc(BUFFER_SIZE);
 	int sended;
 	int size;
-	LOGN("proxy setup from %d to %d...\n", pargs->srcfd, pargs->dstfd);
+	printf("proxy setup from %d to %d...\n", pargs->srcfd, pargs->dstfd);
 	while ( 1 ) {
 		size = 0;
 		sended = 0;
@@ -45,39 +49,34 @@ AGAIN:
 		}
 		
 	}
-	LOGN("proxy from %d to %d exiting, %d bytes left.\n", pargs->srcfd, pargs->dstfd, size-sended);
-	FREE_POINTER(buffer);
-	FREE_POINTER(pargs);
+	printf("proxy from %d to %d exiting, %d bytes left.\n", pargs->srcfd, pargs->dstfd, size-sended);
+	free(buffer);
+	free(pargs);
 }
 
 
 typedef struct on_accept_args
 {
 	int fd;
-	u32 ip;
-	u16 port;
+	struct sockaddr_in dst_addr;
 } on_accept_args_t;
 
 void on_accept(on_accept_args_t *args)
 {
 	int fd = args->fd;
-	struct sockaddr_in dst_addr = {0};
-	dst_addr.sin_family = AF_INET;
-	dst_addr.sin_addr.s_addr = args->ip;
-	dst_addr.sin_port = args->port;
 
 	while ( 1 ) {
 		int clt_fd = evco_accept(fd);
 		if ( clt_fd == -1 ) {
 			break;
 		}
-		LOGN("one client connected...\n");
+		printf("one client connected...\n");
 		int ret = 0;
 		int dst_fd = socket(AF_INET, SOCK_STREAM, 0);
 
-		ret = evco_connect(dst_fd, &dst_addr, sizeof(struct sockaddr_in));
+		ret = evco_connect(dst_fd, &args->dst_addr, sizeof(struct sockaddr_in));
 		if ( ret != 0 ) {
-			LOGW("connect failed...\n");
+			printf("connect failed...\n");
 			evco_close(clt_fd);
 			evco_close(dst_fd);
 		}
@@ -93,41 +92,61 @@ void on_accept(on_accept_args_t *args)
 		evco_create(evco_get_sc(), STACK_SIZE, (evco_func)proxy, pargs2);
 	}
 	evco_close(fd);
-	FREE_POINTER(args);
+	free(args);
 }
 
 
 int main(int argc, char *argv[])
 {
 	char *ip = NULL;
-	u16 port = 0;
+	unsigned short port = 0;
 
-	char *dstaddr = NULL;
-	u16 dstport = 0;
+	char *dstip = NULL;
+	unsigned short dstport = 0;
 
 	int lfd = 0;
 	int ret = 0;
 
+    struct sockaddr_in addr = {0};
+
 	evsc_t *psc = evsc_alloc();
+
 	if ( argc < 5 ) {
-		LOGW("Usage: %s [srcaddr] [srcport] [dstaddr] [dstport]\n", argv[0]);
+		printf("Usage: %s [srcaddr] [srcport] [dstaddr] [dstport]\n", argv[0]);
 		goto _E1;
 	}
+
 	ip = argv[1];
 	port = atoi(argv[2]);
-	dstaddr = argv[3];
-	dstport = atoi(argv[4]);
+    dstip = argv[3];
+    dstport = atoi(argv[4]);
 
-	ret = api_tcp_listen_setup(ip_aton(ip), htons(port), &lfd);
-	if ( ret != SUCCESS ) {
-		LOGW("api_tcp_listen_setup failed...\n");
-		return 0;
-	}	
+    lfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    addr.sin_family = AF_INET;
+    inet_aton(ip, &addr.sin_addr);
+    addr.sin_port = htons(port);
+
+    ret = bind(lfd, (struct sockaddr *)&addr, sizeof(struct sockaddr_in));
+    if ( ret < 0 ) {
+        perror("bind failed...\n");
+        return 0;
+    }
+
+    ret = listen(lfd, 1024);
+    if ( ret < 0 ) {
+        printf("listen failed...\n");
+        return 0;
+    }
+
 	on_accept_args_t *args = (on_accept_args_t *)malloc(sizeof(on_accept_args_t));
-	api_set_nonblock(lfd);
+
+	evutil_make_socket_nonblocking(lfd);
+
 	args->fd = lfd;
-	args->ip = ip_aton(dstaddr);
-	args->port = htons(dstport);
+    args->dst_addr.sin_family = AF_INET;
+    args->dst_addr.sin_port = htons(dstport);
+    inet_aton(dstip, &args->dst_addr.sin_addr);
 	evco_create(psc, STACK_SIZE, (evco_func)on_accept, args);
 	evco_dispatch(psc);
 _E1:
