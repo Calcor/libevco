@@ -1,15 +1,9 @@
-/***************************************************************************************
- *   Copyright (C), 2006-2017, HelloWorld Technology Co., Ltd.
- *
- *    Filename: co.c
- * Description: 
- *     Version: 1.0
- *     Created: Miaosu   11/15/17 15:38:42
- *    Revision: none
- *
- *     History: <author>   <time>    <version >         <desc>
- *              Miaosu   11/15/17                  build this moudle  
- ***************************************************************************************/
+/*************************************************************************
+	> File Name: evco.c
+	> Author: 
+	> Mail: 
+	> Created Time: Tue 05 Dec 2017 04:50:17 AM PST
+ ************************************************************************/
 
 #include <stdio.h>
 #include <errno.h>
@@ -496,6 +490,7 @@ int evco_cond_timedwait(evco_cond_t *pcond, int msec)
 		return ETIMEDOUT;
 	}
 	else {
+        event_del(g_current_pco->timer);
 		return 0;
 	}
 }

@@ -1,15 +1,10 @@
-/***************************************************************************************
- *   Copyright (C), 2006-2017, Legendsec Technology Co., Ltd.
- *
- *    Filename: main.c
- * Description: 
- *     Version: 1.0
- *     Created: Miaosu   11/15/17 19:52:58
- *    Revision: none
- *
- *     History: <author>   <time>    <version >         <desc>
- *              Miaosu   11/15/17                  build this moudle  
- ***************************************************************************************/
+/*************************************************************************
+	> File Name: test_echo.c
+	> Author: 
+	> Mail: 
+	> Created Time: Tue 05 Dec 2017 04:50:17 AM PST
+ ************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>

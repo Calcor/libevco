@@ -76,7 +76,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-noinst_PROGRAMS = test_echo$(EXEEXT)
+noinst_PROGRAMS = test_echo$(EXEEXT) test_cond$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/depcomp
@@ -88,6 +88,9 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
+am_test_cond_OBJECTS = test_cond.$(OBJEXT)
+test_cond_OBJECTS = $(am_test_cond_OBJECTS)
+test_cond_LDADD = $(LDADD)
 am_test_echo_OBJECTS = test_echo.$(OBJEXT)
 test_echo_OBJECTS = $(am_test_echo_OBJECTS)
 test_echo_LDADD = $(LDADD)
@@ -119,8 +122,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(test_echo_SOURCES)
-DIST_SOURCES = $(test_echo_SOURCES)
+SOURCES = $(test_cond_SOURCES) $(test_echo_SOURCES)
+DIST_SOURCES = $(test_cond_SOURCES) $(test_echo_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -237,6 +240,7 @@ top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
 INCLUDES = -I../include
 test_echo_SOURCES = test_echo.c
+test_cond_SOURCES = test_cond.c
 all: all-am
 
 .SUFFIXES:
@@ -275,6 +279,10 @@ $(am__aclocal_m4_deps):
 clean-noinstPROGRAMS:
 	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
 
+test_cond$(EXEEXT): $(test_cond_OBJECTS) $(test_cond_DEPENDENCIES) $(EXTRA_test_cond_DEPENDENCIES) 
+	@rm -f test_cond$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(test_cond_OBJECTS) $(test_cond_LDADD) $(LIBS)
+
 test_echo$(EXEEXT): $(test_echo_OBJECTS) $(test_echo_DEPENDENCIES) $(EXTRA_test_echo_DEPENDENCIES) 
 	@rm -f test_echo$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_echo_OBJECTS) $(test_echo_LDADD) $(LIBS)
@@ -285,6 +293,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_cond.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_echo.Po@am__quote@
 
 .c.o:

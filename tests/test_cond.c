@@ -1,16 +1,12 @@
-/***************************************************************************************
- *   Copyright (C), 2006-2017, Legendsec Technology Co., Ltd.
- *
- *    Filename: test_cond.c
- * Description: 
- *     Version: 1.0
- *     Created: Miaosu   11/20/17 15:41:09
- *    Revision: none
- *
- *     History: <author>   <time>    <version >         <desc>
- *              Miaosu   11/20/17                  build this moudle  
- ***************************************************************************************/
+/*************************************************************************
+	> File Name: test_cond.c
+	> Author: 
+	> Mail: 
+	> Created Time: Tue 05 Dec 2017 04:50:17 AM PST
+ ************************************************************************/
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
 #include "evco.h"
 
