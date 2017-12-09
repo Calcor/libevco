@@ -1,0 +1,189 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BUFFER_SIZE	test_proxy.c	27;"	d	file:
+CC	Makefile	/^CC      = gcc$/;"	m
+FREE_POINTER	evco.c	87;"	d	file:
+HLIST_HEAD	list.h	388;"	d
+HLIST_HEAD_INIT	list.h	387;"	d
+INIT_HLIST_HEAD	list.h	389;"	d
+INIT_HLIST_NODE	list.h	390;"	d
+INIT_LIST_HEAD	list.h	75;"	d
+LIST_HEAD	list.h	72;"	d
+LIST_HEAD_INIT	list.h	70;"	d
+LIST_POISON1	list.h	54;"	d
+LIST_POISON2	list.h	55;"	d
+STACK_SIZE	evco.h	18;"	d
+STACK_SIZE	server.c	20;"	d	file:
+_EVCO_H_	evco.h	16;"	d
+_LINUX_LIST_H	list.h	24;"	d
+__evco_cond_ready_clear	evco.c	/^int __evco_cond_ready_clear(evsc_t *psc)$/;"	f
+__evco_entry	evco.c	/^void CALLBACK __evco_entry(void *args)$/;"	f
+__evco_entry	evco.c	/^void __evco_entry(evco_func func, void *args)$/;"	f
+__evco_free	evco.c	132;"	d	file:
+__evco_free	evco.c	143;"	d	file:
+__evco_resume	evco.c	/^static void __evco_resume(evco_t *pco)$/;"	f	file:
+__evco_yield	evco.c	/^static void inline __evco_yield()$/;"	f	file:
+__evco_yield_by_fd	evco.c	/^static void __evco_yield_by_fd(int fd, int flag, unsigned int to_msec)$/;"	f	file:
+__evsc_fd_dispatch	evco.c	/^static void __evsc_fd_dispatch(int sockfd, short events, void *vitem)$/;"	f	file:
+__evsc_timer_dispatch	evco.c	/^static void __evsc_timer_dispatch(int fd, short events, void *vitem)$/;"	f	file:
+__fd_item_alloc	evco.c	/^static fd_item_t *__fd_item_alloc(evsc_t *psc, int fd)$/;"	f	file:
+__fd_item_free	evco.c	/^void __fd_item_free(fd_item_t *pitem)$/;"	f
+__hlist_del	list.h	/^static inline void __hlist_del(struct hlist_node *n)$/;"	f
+__list_add	list.h	/^static inline void __list_add(struct list_head *new,$/;"	f
+__list_del	list.h	/^static inline void __list_del(struct list_head * prev, struct list_head * next)$/;"	f
+__list_for_each	list.h	262;"	d
+__list_splice	list.h	/^static inline void __list_splice(struct list_head *list,$/;"	f
+clt_num	server.c	/^int clt_num = 0;$/;"	v
+co_accept	server.c	/^int co_accept(item_t *pitem)$/;"	f
+co_create	server.c	/^int co_create(item_t *pitem, size_t stack_size, co_func func)$/;"	f
+co_entry	server.c	/^void co_entry(void *args)$/;"	f
+co_func	server.c	/^typedef void (*co_func)(void *);$/;"	t	file:
+co_recv	server.c	/^int co_recv(item_t *pitem, char *buffer, size_t size) {$/;"	f
+co_send	server.c	/^int co_send(item_t *pitem, char *buffer, size_t size) {$/;"	f
+cond_item	evco.c	/^typedef struct cond_item$/;"	s	file:
+cond_item_t	evco.c	/^}cond_item_t;$/;"	t	typeref:struct:cond_item	file:
+cond_ready_queue	evco.c	/^	struct list_head cond_ready_queue;$/;"	m	struct:evsc	typeref:struct:evsc::list_head	file:
+consumer	test_cond.c	/^void consumer(consumer_args_t *pargs)$/;"	f
+consumer_args	test_cond.c	/^typedef struct consumer_args {$/;"	s	file:
+consumer_args_t	test_cond.c	/^}consumer_args_t;$/;"	t	typeref:struct:consumer_args	file:
+container_of	list.h	43;"	d
+dstfd	test_proxy.c	/^	int dstfd;$/;"	m	struct:proxy_args	file:
+entry	evco.c	/^	struct list_head entry;$/;"	m	struct:cond_item	typeref:struct:cond_item::list_head	file:
+ev_base	evco.c	/^	struct event_base *ev_base;$/;"	m	struct:evsc	typeref:struct:evsc::event_base	file:
+ev_base	server.c	/^struct event_base *ev_base = NULL;$/;"	v	typeref:struct:event_base
+ev_recv	evco.c	/^	struct event *ev_recv;$/;"	m	struct:fd_item	typeref:struct:fd_item::event	file:
+ev_recv	server.c	/^	struct event *ev_recv;$/;"	m	struct:item	typeref:struct:item::event	file:
+ev_send	evco.c	/^	struct event *ev_send;$/;"	m	struct:fd_item	typeref:struct:fd_item::event	file:
+ev_send	server.c	/^	struct event *ev_send;$/;"	m	struct:item	typeref:struct:item::event	file:
+evco	evco.c	/^struct evco$/;"	s	file:
+evco_accept	evco.c	/^int evco_accept(int fd)$/;"	f
+evco_close	evco.c	/^int evco_close(int fd)$/;"	f
+evco_cond	evco.c	/^struct evco_cond$/;"	s	file:
+evco_cond_alloc	evco.c	/^evco_cond_t *evco_cond_alloc()$/;"	f
+evco_cond_broadcast	evco.c	/^int evco_cond_broadcast(evco_cond_t *pcond)$/;"	f
+evco_cond_free	evco.c	/^int evco_cond_free(evco_cond_t *pcond)$/;"	f
+evco_cond_signal	evco.c	/^int evco_cond_signal(evco_cond_t *pcond)$/;"	f
+evco_cond_t	evco.h	/^typedef struct evco_cond evco_cond_t;$/;"	t	typeref:struct:evco_cond
+evco_cond_timedwait	evco.c	/^int evco_cond_timedwait(evco_cond_t *pcond, int msec)$/;"	f
+evco_connect	evco.c	/^int evco_connect(int fd, const struct sockaddr *addr, socklen_t addrlen)$/;"	f
+evco_create	evco.c	/^evco_t *evco_create(evsc_t *psc, size_t stack_size, evco_func func, void *args)$/;"	f
+evco_dispatch	evco.c	/^int evco_dispatch(evsc_t *psc)$/;"	f
+evco_func	evco.h	/^typedef void (*evco_func)(void *);$/;"	t
+evco_get_co	evco.c	/^evco_t *evco_get_co()$/;"	f
+evco_get_sc	evco.c	/^evsc_t *evco_get_sc()$/;"	f
+evco_recv	evco.c	/^	evco_t *evco_recv;$/;"	m	struct:fd_item	file:
+evco_recv	evco.c	/^int evco_recv(int fd, char *buffer, size_t size) {$/;"	f
+evco_send	evco.c	/^	evco_t *evco_send;$/;"	m	struct:fd_item	file:
+evco_send	evco.c	/^int evco_send(int fd, char *buffer, size_t size) {$/;"	f
+evco_sleep	evco.c	/^void evco_sleep(int msec)$/;"	f
+evco_t	evco.h	/^typedef struct evco evco_t;$/;"	t	typeref:struct:evco
+evsc	evco.c	/^struct evsc$/;"	s	file:
+evsc_alloc	evco.c	/^evsc_t *evsc_alloc()$/;"	f
+evsc_t	evco.h	/^typedef struct evsc evsc_t;$/;"	t	typeref:struct:evsc
+fd	evco.c	/^	int fd;$/;"	m	struct:fd_item	file:
+fd	test_echo.c	/^	int fd;$/;"	m	struct:on_accept_args	file:
+fd	test_echo.c	/^	int fd;$/;"	m	struct:on_read_args	file:
+fd	test_proxy.c	/^	int fd;$/;"	m	struct:on_accept_args	file:
+fd_item	evco.c	/^typedef struct fd_item$/;"	s	file:
+fd_item_t	evco.c	/^}fd_item_t;$/;"	t	typeref:struct:fd_item	file:
+fd_tb	evco.c	/^	GHashTable *fd_tb;$/;"	m	struct:evsc	file:
+first	list.h	/^    struct hlist_node *first;$/;"	m	struct:hlist_head	typeref:struct:hlist_head::hlist_node
+flag_iotimeout	evco.c	/^	int flag_iotimeout;$/;"	m	struct:evco	file:
+flag_running	evco.c	/^	int flag_running;$/;"	m	struct:evco	file:
+func	evco.c	/^	evco_func func;$/;"	m	struct:evco	file:
+func	server.c	/^	co_func func;$/;"	m	struct:item	file:
+g_current_pco	evco.c	/^__thread evco_t *g_current_pco = NULL;$/;"	v
+hlist_add_after	list.h	/^static inline void hlist_add_after(struct hlist_node *n,$/;"	f
+hlist_add_before	list.h	/^static inline void hlist_add_before(struct hlist_node *n,$/;"	f
+hlist_add_head	list.h	/^static inline void hlist_add_head(struct hlist_node *n, struct hlist_head *h)$/;"	f
+hlist_del	list.h	/^static inline void hlist_del(struct hlist_node *n)$/;"	f
+hlist_del_init	list.h	/^static inline void hlist_del_init(struct hlist_node *n)$/;"	f
+hlist_empty	list.h	/^static inline int hlist_empty(const struct hlist_head *h)$/;"	f
+hlist_entry	list.h	462;"	d
+hlist_for_each	list.h	464;"	d
+hlist_for_each_entry	list.h	479;"	d
+hlist_for_each_entry_continue	list.h	491;"	d
+hlist_for_each_entry_from	list.h	503;"	d
+hlist_for_each_entry_safe	list.h	516;"	d
+hlist_for_each_safe	list.h	468;"	d
+hlist_head	list.h	/^struct hlist_head {$/;"	s
+hlist_node	list.h	/^struct hlist_node {$/;"	s
+hlist_unhashed	list.h	/^static inline int hlist_unhashed(const struct hlist_node *h)$/;"	f
+index	test_cond.c	/^	int index;$/;"	m	struct:consumer_args	file:
+ip	test_proxy.c	/^	u32 ip;$/;"	m	struct:on_accept_args	file:
+item	server.c	/^typedef struct item$/;"	s	file:
+item_t	server.c	/^}item_t;$/;"	t	typeref:struct:item	file:
+list_add	list.h	/^static inline void list_add(struct list_head *new, struct list_head *head)$/;"	f
+list_add_tail	list.h	/^static inline void list_add_tail(struct list_head *new, struct list_head *head)$/;"	f
+list_del	list.h	/^static inline void list_del(struct list_head *entry)$/;"	f
+list_del_init	list.h	/^static inline void list_del_init(struct list_head *entry)$/;"	f
+list_empty	list.h	/^static inline int list_empty(const struct list_head *head)$/;"	f
+list_entry	list.h	239;"	d
+list_for_each	list.h	248;"	d
+list_for_each_entry	list.h	290;"	d
+list_for_each_entry_continue	list.h	323;"	d
+list_for_each_entry_reverse	list.h	301;"	d
+list_for_each_entry_safe	list.h	335;"	d
+list_for_each_entry_safe_continue	list.h	349;"	d
+list_for_each_entry_safe_reverse	list.h	363;"	d
+list_for_each_prev	list.h	270;"	d
+list_for_each_safe	list.h	280;"	d
+list_head	list.h	/^struct list_head {$/;"	s
+list_move	list.h	/^static inline void list_move(struct list_head *list, struct list_head *head)$/;"	f
+list_move_tail	list.h	/^static inline void list_move_tail(struct list_head *list,$/;"	f
+list_prepare_entry	list.h	313;"	d
+list_splice	list.h	/^static inline void list_splice(struct list_head *list, struct list_head *head)$/;"	f
+list_splice_init	list.h	/^static inline void list_splice_init(struct list_head *list,$/;"	f
+main	server.c	/^int main(int argc, char *argv[])$/;"	f
+main	test_cond.c	/^int main(int argc, char *argv[])$/;"	f
+main	test_echo.c	/^int main(int argc, char *argv[])$/;"	f
+main	test_proxy.c	/^int main(int argc, char *argv[])$/;"	f
+msec2tv	evco.c	101;"	d	file:
+next	list.h	/^    struct hlist_node *next, **pprev;$/;"	m	struct:hlist_node	typeref:struct:hlist_node::hlist_node
+next	list.h	/^    struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head
+offsetof	list.h	34;"	d
+on_accept	server.c	/^void on_accept(void *args)$/;"	f
+on_accept	test_echo.c	/^void on_accept(on_accept_args_t *args)$/;"	f
+on_accept	test_proxy.c	/^void on_accept(on_accept_args_t *args)$/;"	f
+on_accept_args	test_echo.c	/^typedef struct on_accept_args$/;"	s	file:
+on_accept_args	test_proxy.c	/^typedef struct on_accept_args$/;"	s	file:
+on_accept_args_t	test_echo.c	/^} on_accept_args_t;$/;"	t	typeref:struct:on_accept_args	file:
+on_accept_args_t	test_proxy.c	/^} on_accept_args_t;$/;"	t	typeref:struct:on_accept_args	file:
+on_read	server.c	/^void on_read(void *args)$/;"	f
+on_read	test_echo.c	/^void on_read(on_read_args_t *args)$/;"	f
+on_read_args	test_echo.c	/^typedef struct on_read_args$/;"	s	file:
+on_read_args_t	test_echo.c	/^} on_read_args_t;$/;"	t	typeref:struct:on_read_args	file:
+pco	evco.c	/^	evco_t *pco;$/;"	m	struct:cond_item	file:
+pcond	test_cond.c	/^	evco_cond_t *pcond;$/;"	m	struct:consumer_args	file:
+pendding_flag	server.c	/^	int pendding_flag;$/;"	m	struct:item	file:
+port	test_proxy.c	/^	u16 port;$/;"	m	struct:on_accept_args	file:
+pprev	list.h	/^    struct hlist_node *next, **pprev;$/;"	m	struct:hlist_node	typeref:struct:hlist_node::
+prev	evco.c	/^	void *prev;$/;"	m	struct:evco	file:
+prev	list.h	/^    struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::
+prev	server.c	/^	ucontext_t prev;$/;"	m	struct:item	file:
+producer	test_cond.c	/^void producer(evco_cond_t *pcond)$/;"	f
+proxy	test_proxy.c	/^void proxy(proxy_args_t *pargs) $/;"	f
+proxy_args	test_proxy.c	/^typedef struct proxy_args {$/;"	s	file:
+proxy_args_t	test_proxy.c	/^}proxy_args_t;$/;"	t	typeref:struct:proxy_args	file:
+psc	evco.c	/^	evsc_t *psc;$/;"	m	struct:evco	file:
+running	server.c	/^	int running;$/;"	m	struct:item	file:
+sc_function	server.c	/^void sc_function(int sockfd, short events, void *vitem)$/;"	f
+self	evco.c	/^	void *self;$/;"	m	struct:evco	file:
+self	server.c	/^	ucontext_t self;$/;"	m	struct:item	file:
+sleep_and_print	test_echo.c	/^void sleep_and_print(sleep_args_t *args)$/;"	f
+sleep_args	test_echo.c	/^typedef struct sleep_args$/;"	s	file:
+sleep_args_t	test_echo.c	/^}sleep_args_t;$/;"	t	typeref:struct:sleep_args	file:
+sock_fd	server.c	/^	int sock_fd;$/;"	m	struct:item	file:
+srcfd	test_proxy.c	/^	int srcfd;$/;"	m	struct:proxy_args	file:
+stack	evco.c	/^	char *stack;$/;"	m	struct:evco	file:
+stack	server.c	/^	char *stack;$/;"	m	struct:item	file:
+stack_size	evco.c	/^	size_t stack_size;$/;"	m	struct:evco	file:
+stack_size	server.c	/^	size_t stack_size;$/;"	m	struct:item	file:
+timeout_msec	evco.c	/^	int timeout_msec;	$/;"	m	struct:cond_item	file:
+timer	evco.c	/^	struct event *timer;$/;"	m	struct:evco	typeref:struct:evco::event	file:
+wait_pcos	evco.c	/^	struct list_head wait_pcos;$/;"	m	struct:evco_cond	typeref:struct:evco_cond::list_head	file:
+x	test_echo.c	/^	int x;$/;"	m	struct:sleep_args	file:
