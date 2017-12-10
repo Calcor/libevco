@@ -8,6 +8,9 @@
 #ifndef _EVCO_H_
 #define _EVCO_H_
 
+#include <sys/types.h>
+#include <sys/socket.h>
+
 #define STACK_SIZE 8192
 
 
@@ -21,13 +24,24 @@ evco_t *evco_create(evsc_t *psc, size_t stack_size, evco_func func, void *args);
 
 void evco_sleep(int msec);
 
+int evco_timed_connect(int fd, const struct sockaddr *addr, socklen_t addrlen, int msec);
+
+int evco_connect(int fd, const struct sockaddr *addr, socklen_t addrlen);
+
+int evco_timed_accept(int fd, int msec);
+
 int evco_accept(int fd);
 
-int evco_close(int fd);
+
+int evco_timed_recv(int fd, char *buffer, size_t size, int msec);
 
 int evco_recv(int fd, char *buffer, size_t size);
 
+int evco_timed_send(int fd, char *buffer, size_t size, int msec);
+
 int evco_send(int fd, char *buffer, size_t size);
+
+int evco_close(int fd);
 
 evsc_t *evsc_alloc();
 

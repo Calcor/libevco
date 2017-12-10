@@ -74,7 +74,7 @@ void on_accept(on_accept_args_t *args)
 		int ret = 0;
 		int dst_fd = socket(AF_INET, SOCK_STREAM, 0);
 
-		ret = evco_connect(dst_fd, &args->dst_addr, sizeof(struct sockaddr_in));
+		ret = evco_connect(dst_fd, (struct sockaddr *)&args->dst_addr, sizeof(struct sockaddr_in));
 		if ( ret != 0 ) {
 			printf("connect failed...\n");
 			evco_close(clt_fd);

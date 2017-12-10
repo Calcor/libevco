@@ -208,6 +208,7 @@ static void __evco_resume(evco_t *pco)
 }
 static void inline __evco_yield()
 {
+    g_current_pco->flag_iotimeout = 0;
 #ifdef WIN32
 	SwitchToFiber(g_current_pco->prev);
 #else
@@ -257,6 +258,11 @@ static void __evsc_fd_dispatch(int sockfd, short events, void *vitem)
 		return;
 	}
 	psc = pco->psc;
+    if ( events & EV_TIMEOUT ) {
+        pco->flag_iotimeout = 1;
+    } else {
+        pco->flag_iotimeout = 0;
+    }
 	__evco_resume(pco);
 	__evco_cond_ready_clear(psc);
 }
@@ -317,7 +323,7 @@ _E1:
 	return NULL;
 }
 
-int evco_connect(int fd, const struct sockaddr *addr, socklen_t addrlen)
+int evco_timed_connect(int fd, const struct sockaddr *addr, socklen_t addrlen, int msec)
 {
 	int ret = 0;
 	evutil_make_socket_nonblocking(fd);
@@ -333,7 +339,11 @@ int evco_connect(int fd, const struct sockaddr *addr, socklen_t addrlen)
 		int err = 0;
 		socklen_t len = sizeof(err);
 		printf("Connect INPROGREESS, will swap.\n");
-		__evco_yield_by_fd(fd, 1, 0);
+		__evco_yield_by_fd(fd, 1, msec);
+        if ( g_current_pco->flag_iotimeout ) {
+            errno = ETIMEDOUT;
+            return -1;
+        }
 		getsockopt(fd, SOL_SOCKET, SO_ERROR, &err, &len);
 		if ( err ) {
 			errno = err;
@@ -349,7 +359,12 @@ int evco_connect(int fd, const struct sockaddr *addr, socklen_t addrlen)
 	
 }
 
-int evco_accept(int fd)
+int evco_connect(int fd, const struct sockaddr *addr, socklen_t addrlen)
+{
+    return evco_timed_connect(fd, addr, addrlen, 0);
+}
+
+int evco_timed_accept(int fd, int msec)
 {
 	int clt_fd = 0;
 _ACCEPT_START:
@@ -364,7 +379,11 @@ _ACCEPT_START:
 	if ( errno == EAGAIN || errno == EWOULDBLOCK ) {
 #endif
 		evco_debug("accept EAGAIN, will swap.\n");
-		__evco_yield_by_fd(fd, 0, 0);
+		__evco_yield_by_fd(fd, 0, msec);
+        if ( g_current_pco->flag_iotimeout ) {
+            errno = ETIMEDOUT;
+            return -1;
+        }
 		goto _ACCEPT_START;	
 	}
 	else {
@@ -372,7 +391,13 @@ _ACCEPT_START:
 	}
 }
 
-int evco_recv(int fd, char *buffer, size_t size) {
+int evco_accept(int fd)
+{
+    return evco_timed_accept(fd, 0);
+}
+
+int evco_timed_recv(int fd, char *buffer, size_t size, int msec) 
+{
 	int ret = 0;
 _RECV_START:
 	ret = recv(fd, buffer, size, 0);
@@ -385,7 +410,11 @@ _RECV_START:
 	if ( errno == EAGAIN || errno == EWOULDBLOCK ) {
 #endif
 		evco_debug("recv EAGAIN, will swap.\n");
-		__evco_yield_by_fd(fd, 0, 0);
+		__evco_yield_by_fd(fd, 0, msec);
+        if ( g_current_pco->flag_iotimeout ) {
+            errno = ETIMEDOUT;
+            return -1;
+        }
 		goto _RECV_START;
 	}
 	else {
@@ -393,7 +422,14 @@ _RECV_START:
 	}
 }
 
-int evco_send(int fd, char *buffer, size_t size) {
+int evco_recv(int fd, char *buffer, size_t size) 
+{
+    return evco_timed_recv(fd, buffer, size, 0);
+}
+
+
+int evco_timed_send(int fd, char *buffer, size_t size, int msec)
+{
 	int ret = 0;
 _SEND_START:
 	ret = send(fd, buffer, size, 0);
@@ -407,11 +443,20 @@ _SEND_START:
 #endif
 		evco_debug("send EAGAIN, will swap.\n");
 		__evco_yield_by_fd(fd, 1, 0);
+        if ( g_current_pco->flag_iotimeout ) {
+            errno = ETIMEDOUT;
+            return -1;
+        }
 		goto _SEND_START;
 	}
 	else {
 		return -1;
 	}
+}
+
+int evco_send(int fd, char *buffer, size_t size) 
+{
+    return evco_timed_send(fd, buffer, size, 0);
 }
 
 void __fd_item_free(fd_item_t *pitem)

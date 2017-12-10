@@ -6,6 +6,7 @@
  ************************************************************************/
 
 #include <stdio.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -25,8 +26,12 @@ void on_read(on_read_args_t *args)
 	int fd = args->fd;
 	char buffer[128] = {0};
 	while ( 1 ) {
-		int ret = evco_recv(fd, buffer, sizeof(buffer));
+		int ret = evco_timed_recv(fd, buffer, sizeof(buffer), 1000);
 		if ( ret <= 0 ) {
+            if ( errno == ETIMEDOUT ) {
+                printf("recv timed out, continue.\n");
+                continue;
+            }
 			break;
 		}
 		ret = evco_send(fd, buffer, ret);
